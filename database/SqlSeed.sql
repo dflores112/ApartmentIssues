@@ -46,5 +46,4 @@ CREATE TABLE WORKERS(
     PRIMARY KEY (id)
 );
 
-Insert into tenants (firstName,lastName,phoneNumber,email) values ("Daniel", "Flores", "4159269091", "Danielflores125@gmail.com");
 
