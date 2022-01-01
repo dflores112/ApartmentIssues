@@ -23,6 +23,11 @@ console.log(faker.company.companyName());
 3 INSERT INTO WORKERS (NAME, PHONE,EMAIL) VALUES("Doug", "2342342111" ,"doug@gmail.com");
 5 INSERT INTO APARTMENT_PROBLEMS (STATUS,DATE, WORKER, APT_ID) VALUES(true, "2021-08-18",1,1 );
 
+
+-- mysql -u root -p < database/SqlSchema.sql
+
+
+
 */
 
 connection.connect(function(err) {
