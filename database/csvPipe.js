@@ -30,7 +30,7 @@ const dataGen = async () => {
 const dataGen2 = async () => {
   const createBuildingsTable = async () => {
     writer2.pipe(fs.createWriteStream('Buildings.csv'));
-    for (let i = 0; i < 100000; i++) {
+    for (let i = 0; i < 33334; i++) {
       
       writer2.write({
         phone_number: faker.phone.phoneNumberFormat(),
@@ -66,16 +66,19 @@ const dataGen3 = async () => {
       parking: false,
       building_id: 1,
     }
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 0; i < 1000000; i++) {
       writer3.write({
         unit_number: temp.unit_number++,
-        occupant_id: getRandomInt(500),
+        occupant_id: getRandomIntInclusive(0,1000000),
         parking: temp1[getRandomIntInclusive(0,1)],
         building_id:temp.building_id,
       });
       if(temp.unit_number === 31){
         temp.unit_number = 1;
         temp.building_id++;
+      }
+      if(temp.building_id === 33334){
+        break;
       }
     }
     writer.end();
@@ -89,10 +92,10 @@ const dataGen3 = async () => {
 
 const dataGen4 = async () => {
   const createWorkersTable = async () => {
-    writer5.pipe(fs.createWriteStream('Workers.csv'));
+    writer4.pipe(fs.createWriteStream('Workers.csv'));
     
-    for (let i = 0; i < 1000; i++) {
-      writer5.write({
+    for (let i = 0; i < 10000; i++) {
+      writer4.write({
         name: faker.name.findName(),
         phone: faker.phone.phoneNumberFormat(),
         email: faker.internet.email()
@@ -116,9 +119,9 @@ const dataGen5 = async () => {
       writer5.write({
         status: temp1[getRandomIntInclusive(0,1)],
         date: faker.date.past().toJSON().slice(0,10),
-        worker: getRandomIntInclusive(0,100),
+        worker: getRandomIntInclusive(0,10000),
         apt_id: getRandomIntInclusive(0,30),
-        building_id: getRandomIntInclusive(0,35)
+        building_id: getRandomIntInclusive(0,33334)
       });
       
     }
