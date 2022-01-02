@@ -7,12 +7,12 @@ let writer3 = csvWriter();
 let writer4 = csvWriter();
 let writer5 = csvWriter();
 
-
 const dataGen = async () => {
   const createTenantsTable = async () => {
     writer.pipe(fs.createWriteStream('Tenants.csv'));
-    for (let i = 0; i < 1000000; i++) {
+    for (let i = 1; i < 1000000; i++) {
       writer.write({
+        id: i,
         first_name: faker.name.firstName(),
         last_name: faker.name.lastName(),
         phone_number:faker.phone.phoneNumberFormat(),
@@ -30,9 +30,10 @@ const dataGen = async () => {
 const dataGen2 = async () => {
   const createBuildingsTable = async () => {
     writer2.pipe(fs.createWriteStream('Buildings.csv'));
-    for (let i = 0; i < 33334; i++) {
+    for (let i = 1; i < 33334; i++) {
       
       writer2.write({
+        id: i,
         phone_number: faker.phone.phoneNumberFormat(),
         email: faker.internet.email(),
         name: faker.company.companyName(),
@@ -55,7 +56,7 @@ function getRandomIntInclusive(min, max) {
   max = Math.floor(max);
   return Math.floor(Math.random() * (max - min + 1) + min); //The maximum is inclusive and the minimum is inclusive
 }
-const temp1 = [false,true]
+const temp1 = [0,1]
 
 
 const dataGen3 = async () => {
@@ -63,14 +64,13 @@ const dataGen3 = async () => {
     writer3.pipe(fs.createWriteStream('Apartments.csv'));
     const temp = {
       unit_number:1,
-      parking: false,
       building_id: 1,
     }
-    for (let i = 0; i < 1000000; i++) {
+    for (let i = 1; i < 1000000; i++) {
       writer3.write({
+        id: i,
         unit_number: temp.unit_number++,
         occupant_id: getRandomIntInclusive(0,1000000),
-        parking: temp1[getRandomIntInclusive(0,1)],
         building_id:temp.building_id,
       });
       if(temp.unit_number === 31){
@@ -94,8 +94,9 @@ const dataGen4 = async () => {
   const createWorkersTable = async () => {
     writer4.pipe(fs.createWriteStream('Workers.csv'));
     
-    for (let i = 0; i < 10000; i++) {
+    for (let i = 1; i < 10000; i++) {
       writer4.write({
+        id: i,
         name: faker.name.findName(),
         phone: faker.phone.phoneNumberFormat(),
         email: faker.internet.email()
@@ -103,7 +104,7 @@ const dataGen4 = async () => {
       
     }
     writer.end();
-    console.log('Generated Apartments csv');
+    console.log('Generated Workers csv');
   }
   await createWorkersTable();
 }
@@ -115,11 +116,12 @@ const dataGen5 = async () => {
   const createMaintenanceTable = async () => {
     writer5.pipe(fs.createWriteStream('Maintenance_Issues.csv'));
     
-    for (let i = 0; i < 1000; i++) {
+    for (let i = 1; i < 10000; i++) {
       writer5.write({
+        id: i,
         status: temp1[getRandomIntInclusive(0,1)],
         date: faker.date.past().toJSON().slice(0,10),
-        worker: getRandomIntInclusive(0,10000),
+        worker_id: getRandomIntInclusive(0,10000),
         apt_id: getRandomIntInclusive(0,30),
         building_id: getRandomIntInclusive(0,33334)
       });
@@ -151,17 +153,12 @@ EXAMPLE INSERT QUERIES PER TABLE
 1 INSERT INTO TENANTS (FIRST_NAME,LAST_NAME,PHONE_NUMBER,EMAIL) VALUES("Allison", "Schultz", "4982847412", "ahshd@gmail.com");
 2 INSERT INTO BUILDINGS (PHONE, EMAIL, NAME) VALUES("1234538513", "AK@gmail.com","llc bean This");
 3 INSERT INTO WORKERS (NAME, PHONE,EMAIL) VALUES("Doug", "2342342111" ,"doug@gmail.com");
-4 INSERT INTO APARTMENTS (UNIT_NUMBER,OCCUPANT_ID,PARKING,BUILDING_ID) VALUES(1,1,false,1);
+4 INSERT INTO APARTMENTS (UNIT_NUMBER,OCCUPANT_ID,PARKING,BUILDING_ID) VALUES(1,879932,true,1);
 5 INSERT INTO MAINTENANCE_ISSUES (STATUS,DATE, WORKER, APT_ID, BUILDING_ID) VALUES(true, "2021-08-18",1,1,2);
 
 
 -- mysql -u root -p < database/SqlSchema.sql
--- mysql -u root -p < database/SqlCsvImport.sql
-
-
 */
-
- 
 
 dataGen(); 
 dataGen2();
